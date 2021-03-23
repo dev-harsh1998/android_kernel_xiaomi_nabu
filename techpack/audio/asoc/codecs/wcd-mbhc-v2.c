@@ -706,7 +706,7 @@ void wcd_mbhc_report_plug(struct wcd_mbhc *mbhc, int insertion,
 
 		mbhc->hph_type = WCD_MBHC_HPH_NONE;
 		mbhc->zl = mbhc->zr = 0;
-		pr_debug("%s: Reporting removal %d(%x)\n", __func__,
+		pr_info("%s: Reporting removal %d(%x)\n", __func__,
 			 jack_type, mbhc->hph_status);
 
 		if (mbhc->mbhc_cb->mbhc_mute_hs_tx &&
@@ -1549,8 +1549,8 @@ static int wcd_mbhc_initialise(struct wcd_mbhc *mbhc)
 		/* Insertion debounce set to 48ms */
 		WCD_MBHC_REG_UPDATE_BITS(WCD_MBHC_INSREM_DBNC, 4);
 	} else {
-		/* Insertion debounce set to 256ms */
-		WCD_MBHC_REG_UPDATE_BITS(WCD_MBHC_INSREM_DBNC, 9);
+		/* Insertion debounce set to 512ms */
+		WCD_MBHC_REG_UPDATE_BITS(WCD_MBHC_INSREM_DBNC, 0x0B);
 	}
 
 	/* Button Debounce set to 16ms */
