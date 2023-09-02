@@ -230,6 +230,8 @@ void __wake_up_sync(struct wait_queue_head *wq_head, unsigned int mode, int nr);
 
 extern void init_wait_entry(struct wait_queue_entry *wq_entry, int flags);
 
+#define PF_HUNG_TASK_KILLING        0x00000001
+
 /*
  * The below macro ___wait_event() has an explicit shadow of the __ret
  * variable when used from the wait_event_*() macros.
