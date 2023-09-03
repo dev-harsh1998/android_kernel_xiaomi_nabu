@@ -555,27 +555,20 @@ int schedtune_cpu_boost(int cpu)
 
 static inline int schedtune_filter_boost(struct task_struct *p)
 {
-	struct schedtune *st = task_schedtune(p);
-	char name_buf[NAME_MAX + 1];
+    if (p->flags & PF_KTHREAD) return 0;
+    if (p->signal->oom_score_adj != 0) return 0;
 
-	cgroup_name(st->css.cgroup, name_buf, sizeof(name_buf));
-	if (unlikely(!strncmp(name_buf, "top-app", strlen("top-app")))) {
-		int adj = p->signal->oom_score_adj;
-		pr_debug("top app is %s with adj %i\n", p->comm, adj);
+    struct schedtune *st = task_schedtune(p);
+    char name_buf[NAME_MAX + 1];
+    cgroup_name(st->css.cgroup, name_buf, sizeof(name_buf));
 
-		/* We only care about adj == 0 */
-		if (adj != 0)
-			return 0;
+    if (strstr(name_buf, "top-app")) {
+        return 20;
+    }
 
-		/* Don't touch kthreads */
-		if (p->flags & PF_KTHREAD)
-			return 0;
-
-		return st->boost;
-	}
-
-	return st->boost;
+    return 0;
 }
+
 
 int schedtune_task_boost(struct task_struct *p)
 {
@@ -603,11 +596,26 @@ int schedtune_task_boost_rcu_locked(struct task_struct *p)
 	if (unlikely(!schedtune_initialized))
 		return 0;
 
-	/* Get task boost value */
-	st = task_schedtune(p);
-	task_boost = st->boost;
+    /* Get task boost value via schedtune_filter_boost */
+	task_boost = schedtune_filter_boost(p);
 
 	return task_boost;
+}
+
+int schedtune_prefer_idle_filter(struct task_struct *p)
+{
+    if (p->flags & PF_KTHREAD) return 0;
+    if (p->signal->oom_score_adj != 0) return 0;
+
+    struct schedtune *st = task_schedtune(p);
+    char name_buf[NAME_MAX + 1];
+    cgroup_name(st->css.cgroup, name_buf, sizeof(name_buf));
+
+    if (strstr(name_buf, "top-app") || strstr(name_buf, "foreground")) {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
 int schedtune_prefer_idle(struct task_struct *p)
@@ -621,7 +629,7 @@ int schedtune_prefer_idle(struct task_struct *p)
 	/* Get prefer_idle value */
 	rcu_read_lock();
 	st = task_schedtune(p);
-	prefer_idle = st->prefer_idle;
+	prefer_idle = schedtune_prefer_idle_filter(p);
 	rcu_read_unlock();
 
 	return prefer_idle;
