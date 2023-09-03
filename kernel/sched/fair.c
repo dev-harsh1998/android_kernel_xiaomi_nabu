@@ -5278,6 +5278,11 @@ enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
 	struct cfs_rq *cfs_rq;
 	struct sched_entity *se = &p->se;
 	int task_new = !(flags & ENQUEUE_WAKEUP);
+    bool prefer_idle = sched_feat(EAS_PREFER_IDLE) ?
+				    (schedtune_prefer_idle(p) > 0) : 0;
+    int task_boost = per_task_boost(p);
+	bool schedtune_boosted = schedtune_task_boost(p) > 0 ||
+			    task_boost_policy(p) == SCHED_BOOST_ON_BIG;
 
 #ifdef CONFIG_SCHED_WALT
 	p->misfit = !task_fits_max(p, rq->cpu);
@@ -5313,7 +5318,7 @@ enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
 	 * utilization updates, so do it here explicitly with the IOWAIT flag
 	 * passed.
 	 */
-	if (p->in_iowait)
+	if (p->in_iowait && prefer_idle && schedtune_boosted)
 		cpufreq_update_util(rq, SCHED_CPUFREQ_IOWAIT);
 
 	for_each_sched_entity(se) {
@@ -5351,7 +5356,8 @@ enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
 	if (!se) {
 		add_nr_running(rq, 1);
 		inc_rq_walt_stats(rq, p);
-		if (!task_new)
+		if ((!task_new) &&
+		    !(prefer_idle && schedtune_boosted && rq->nr_running == 1))
 			update_overutilized_status(rq);
 	}
 
@@ -7580,7 +7586,7 @@ static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 			 * than the one required to boost the task.
 			 */
 			new_util = max(min_util, new_util);
-			if (new_util > capacity_orig)
+			if (new_util > capacity_orig && prefer_idle && boosted)
 				continue;
 
 			/*
@@ -7622,7 +7628,7 @@ static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 			 * represent an optimal choice for latency sensitive
 			 * tasks.
 			 */
-			if (prefer_idle) {
+			if (prefer_idle && boosted) {
 
 				/*
 				 * Case A.1: IDLE CPU
@@ -8248,7 +8254,7 @@ static int find_energy_efficient_cpu(struct sched_domain *sd,
 			goto out;
 
 		/* Immediately return a found idle CPU for a prefer_idle task */
-		if (prefer_idle && idle_cpu(target_cpu))
+		if (prefer_idle && boosted && idle_cpu(target_cpu))
 			goto out;
 
 #ifdef CONFIG_SCHED_WALT
