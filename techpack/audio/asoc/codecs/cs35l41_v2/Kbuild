@@ -6,7 +6,7 @@ else
 	KERNEL_BUILD := 0
 endif
 
-
+TARGET_PRODUCT := nabu
 
 ifeq ($(KERNEL_BUILD), 1)
 	# These are configurable via Kconfig for kernel-based builds

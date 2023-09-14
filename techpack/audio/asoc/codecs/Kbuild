@@ -182,9 +182,7 @@ CDEFINES +=	-DANI_LITTLE_BYTE_ENDIAN \
 		-Werror\
 		-D__linux__
 
-ifeq ($(PRODUCT_BUILD_INTERNATIONAL),true)
 CDEFINES += -DGOOGLE_HOTWORD
-endif
 
 KBUILD_CPPFLAGS += $(CDEFINES)
 
@@ -208,6 +206,7 @@ KBUILD_EXTRA_SYMBOLS +=$(OUT)/obj/vendor/qcom/opensource/audio-kernel/soc/Module
 endif
 
 CDEFINES += -DCONFIG_SND_SOC_HEADSET_2700MV
+TARGET_PRODUCT := nabu
 
 ifeq ($(KERNEL_BUILD), 1)
 	obj-y	+= wcd934x/
