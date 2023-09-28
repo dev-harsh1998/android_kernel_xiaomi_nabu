@@ -87,7 +87,7 @@ INCS +=		$(COMMON_INC) \
 
 EXTRA_CFLAGS += $(INCS)
 
-ifeq ($(TARGET_PRODUCT), $(filter $(TARGET_PRODUCT), nabu))
+ifeq ($(CONFIG_MACH_XIAOMI_NABU), y)
        CDEFINES += -DCONFIG_AUDIO_SMARTPA_STEREO
 endif
 
