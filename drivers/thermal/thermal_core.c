@@ -817,7 +817,8 @@ int thermal_zone_bind_cooling_device(struct thermal_zone_device *tz,
 		goto free_mem;
 
 	dev->id = result;
-	sprintf(dev->name, "cdev%d", dev->id);
+	snprintf(dev->name, sizeof(dev->name), "cdev%d",
+		dev->id);
 	result =
 	    sysfs_create_link(&tz->device.kobj, &cdev->device.kobj, dev->name);
 	if (result)
