@@ -1,7 +1,7 @@
-name: MergeLinuxOpenELA
+name: MergeLosMsmNile
 
 on:
-  schedule: [cron: '15 5 * * 2']
+  schedule: [cron: '20 5 * * 2']
   workflow_dispatch:
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
       run: |
         git config user.name "Harshit Jain"
         git config user.email "reach@harsh1998.dev"
-        git fetch https://github.com/openela/kernel-lts linux-4.14.y
+        git fetch https://github.com/LineageOS/android_kernel_qcom_sm8150 lineage-20
 
     - name: Merge
       run: |
