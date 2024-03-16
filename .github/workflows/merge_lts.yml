@@ -1,0 +1,30 @@
+name: Merge
+
+on:
+  schedule: [cron: '15 5 * * 2']
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Automatic merge
+    runs-on: macos-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Fetch LTS release repo
+      run: |
+        git config user.name "Harshit Jain"
+        git config user.email "reach@harsh1998.dev"
+        git fetch https://github.com/openela/kernel-lts linux-4.14.y
+
+    - name: Merge
+      run: |
+        git merge FETCH_HEAD
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
