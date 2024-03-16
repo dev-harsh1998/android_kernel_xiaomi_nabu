@@ -356,4 +356,10 @@ int sde_encoder_get_ctlstart_timeout_state(struct drm_encoder *enc);
  * @Return:     non zero value if wait timeout occurred
  */
 int sde_encoder_vid_wait_for_active(struct drm_encoder *enc);
+
+/**
+ * sde_encoder_trigger_early_wakeup - trigger early wake up
+ * @drm_enc:    Pointer to drm encoder structure
+ */
+void sde_encoder_trigger_early_wakeup(struct drm_encoder *drm_enc);
 #endif /* __SDE_ENCODER_H__ */
