@@ -80,11 +80,11 @@ module_param(srpt_srq_size, int, 0444);
 MODULE_PARM_DESC(srpt_srq_size,
 		 "Shared receive queue (SRQ) size.");
 
-static int srpt_set_u64_x(const char *buffer, struct kernel_param *kp)
+static int srpt_set_u64_x(const char *buffer, const struct kernel_param *kp)
 {
 	return kstrtou64(buffer, 16, (u64 *)kp->arg);
 }
-static int srpt_get_u64_x(char *buffer, struct kernel_param *kp)
+static int srpt_get_u64_x(char *buffer, const struct kernel_param *kp)
 {
 	return sprintf(buffer, "0x%016llx", *(u64 *)kp->arg);
 }
