@@ -1156,8 +1156,7 @@ int npu_enable_sys_cache(struct npu_device *npu_dev)
 	uint32_t reg_val = 0;
 
 	if (!npu_dev->host_ctx.sys_cache_disable) {
-		npu_dev->sys_cache = llcc_slice_getd(&(npu_dev->pdev->dev),
-			"npu");
+		npu_dev->sys_cache = llcc_slice_getd(LLCC_NPU);
 		if (IS_ERR_OR_NULL(npu_dev->sys_cache)) {
 			pr_warn("unable to init sys cache\n");
 			npu_dev->sys_cache = NULL;
@@ -2230,23 +2229,6 @@ static int npu_probe(struct platform_device *pdev)
 
 	npu_debugfs_init(npu_dev);
 
-	npu_dev->smmu_ctx.attach_cnt = 0;
-	npu_dev->smmu_ctx.mmu_mapping = arm_iommu_create_mapping(
-		pdev->dev.bus, DDR_MAPPED_START_ADDR, DDR_MAPPED_SIZE);
-	if (IS_ERR(npu_dev->smmu_ctx.mmu_mapping)) {
-		pr_err("iommu create mapping failed\n");
-		rc = -ENOMEM;
-		npu_dev->smmu_ctx.mmu_mapping = NULL;
-		goto error_driver_init;
-	}
-
-	rc = arm_iommu_attach_device(&(npu_dev->pdev->dev),
-			npu_dev->smmu_ctx.mmu_mapping);
-	if (rc) {
-		pr_err("arm_iommu_attach_device failed\n");
-		goto error_driver_init;
-	}
-
 	rc = npu_host_init(npu_dev);
 	if (rc) {
 		pr_err("unable to init host\n");
@@ -2257,9 +2239,6 @@ static int npu_probe(struct platform_device *pdev)
 
 	return rc;
 error_driver_init:
-	arm_iommu_detach_device(&(npu_dev->pdev->dev));
-	if (!npu_dev->smmu_ctx.mmu_mapping)
-		arm_iommu_release_mapping(npu_dev->smmu_ctx.mmu_mapping);
 	npu_cdsprm_cxlimit_deinit(npu_dev);
 	if (npu_dev->tcdev)
 		thermal_cooling_device_unregister(npu_dev->tcdev);
@@ -2283,8 +2262,6 @@ static int npu_remove(struct platform_device *pdev)
 
 	npu_dev = platform_get_drvdata(pdev);
 	npu_host_deinit(npu_dev);
-	arm_iommu_detach_device(&(npu_dev->pdev->dev));
-	arm_iommu_release_mapping(npu_dev->smmu_ctx.mmu_mapping);
 	npu_debugfs_deinit(npu_dev);
 	npu_cdsprm_cxlimit_deinit(npu_dev);
 	if (npu_dev->tcdev)
