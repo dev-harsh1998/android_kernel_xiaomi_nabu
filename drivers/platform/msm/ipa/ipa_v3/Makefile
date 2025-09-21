@@ -20,4 +20,6 @@ ipat-$(CONFIG_IPA3_REGDUMP) += dump/ipa_reg_dump.o
 
 ccflags-$(CONFIG_IPA3_REGDUMP) += -Idrivers/platform/msm/ipa/ipa_v3/dump
 
+ccflags-$(CONFIG_IPA3_REGDUMP_IPA_4_1) += -Idrivers/platform/msm/ipa/ipa_v3/dump/ipa4.1
+
 ccflags-$(CONFIG_IPA3_REGDUMP_IPA_4_5) += -Idrivers/platform/msm/ipa/ipa_v3/dump/ipa4.5
