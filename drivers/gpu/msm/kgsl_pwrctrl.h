@@ -111,7 +111,11 @@ struct kgsl_pwrlevel {
 	unsigned int bus_freq;
 	unsigned int bus_min;
 	unsigned int bus_max;
+#if defined(CONFIG_ARCH_SM8150)
+	u32 acd_level[2];
+#else
 	unsigned int acd_level;
+#endif
 };
 
 struct kgsl_regulator {
