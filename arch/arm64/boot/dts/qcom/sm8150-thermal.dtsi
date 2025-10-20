@@ -9,7 +9,7 @@
 	#cooling-cells = <2>;
 };
 
-&clock_cpucc {
+&cpufreq_hw {
 	#address-cells = <1>;
 	#size-cells = <1>;
 	lmh_dcvs0: qcom,limits-dcvs@0 {
