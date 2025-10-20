@@ -377,7 +377,7 @@
 			"iface_clk", "rot_clk";
 
 		interrupt-parent = <&mdss_mdp>;
-		interrupts = <2 IRQ_TYPE_LEVEL_HIGH>;
+		interrupts = <2 0>;
 
 		power-domains = <&mdss_mdp>;
 
@@ -429,7 +429,7 @@
 			<0xaf08000 0x4>;
 		reg-names = "dsi_ctrl", "disp_cc_base";
 		interrupt-parent = <&mdss_mdp>;
-		interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
+		interrupts = <4 0>;
 		vdda-1p2-supply = <&pm8150l_l3>;
 		clocks = <&clock_dispcc DISP_CC_MDSS_BYTE0_CLK>,
 			<&clock_dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>,
@@ -477,7 +477,7 @@
 			<0xaf08000 0x4>;
 		reg-names = "dsi_ctrl", "disp_cc_base";
 		interrupt-parent = <&mdss_mdp>;
-		interrupts = <5 IRQ_TYPE_LEVEL_HIGH>;
+		interrupts = <5 0>;
 		vdda-1p2-supply = <&pm8150l_l3>;
 		clocks = <&clock_dispcc DISP_CC_MDSS_BYTE1_CLK>,
 			<&clock_dispcc DISP_CC_MDSS_BYTE1_CLK_SRC>,
@@ -610,7 +610,7 @@
 			"usb3_dp_com", "hdcp_physical", "dp_p1";
 
 		interrupt-parent = <&mdss_mdp>;
-		interrupts = <12 IRQ_TYPE_LEVEL_HIGH>;
+		interrupts = <12 0>;
 
 		clocks =  <&clock_dispcc DISP_CC_MDSS_DP_AUX_CLK>,
 			 <&clock_rpmh RPMH_CXO_CLK>,
