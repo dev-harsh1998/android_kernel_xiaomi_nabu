@@ -1295,7 +1295,7 @@
 		};
 
 		cpu4_computemon: qcom,cpu4-computemon {
-			compatible = "qcom,arm-cpu-mon";
+			compatible = "qcom,arm-compute-mon";
 			qcom,cpulist = <&CPU4 &CPU5 &CPU6 &CPU7>;
 			qcom,target-dev = <&cpu4_cpu_ddr_latfloor>;
 			qcom,core-dev-table =
