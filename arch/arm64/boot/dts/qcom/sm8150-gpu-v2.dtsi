@@ -101,6 +101,7 @@
 				qcom,bus-freq = <11>;
 				qcom,bus-min = <11>;
 				qcom,bus-max = <11>;
+				qcom,acd-level = <0x802d5ffd 0x00005411>;
 			};
 
 			qcom,gpu-pwrlevel@1 {
@@ -109,6 +110,7 @@
 				qcom,bus-freq = <9>;
 				qcom,bus-min = <8>;
 				qcom,bus-max = <11>;
+				qcom,acd-level = <0xa02d5ffd 0x00006011>;
 			};
 
 			qcom,gpu-pwrlevel@2 {
@@ -117,6 +119,7 @@
 				qcom,bus-freq = <6>;
 				qcom,bus-min = <5>;
 				qcom,bus-max = <9>;
+				qcom,acd-level = <0xa02d5ffd 0x00006111>;
 			};
 
 			qcom,gpu-pwrlevel@3 {
@@ -125,6 +128,7 @@
 				qcom,bus-freq = <3>;
 				qcom,bus-min = <3>;
 				qcom,bus-max = <5>;
+				qcom,acd-level = <0xa02d5ffd 0x00006911>;
 			};
 
 			qcom,gpu-pwrlevel@4 {
@@ -133,6 +137,7 @@
 				qcom,bus-freq = <3>;
 				qcom,bus-min = <2>;
 				qcom,bus-max = <4>;
+				qcom,acd-level = <0xa02d5ffd 0x00007611>;
 			};
 
 			qcom,gpu-pwrlevel@5 {
@@ -156,6 +161,7 @@
 				qcom,bus-freq = <11>;
 				qcom,bus-min = <11>;
 				qcom,bus-max = <11>;
+				qcom,acd-level = <0x802d5ffd 0x00005411>;
 			};
 
 			qcom,gpu-pwrlevel@1 {
@@ -164,6 +170,7 @@
 				qcom,bus-freq = <10>;
 				qcom,bus-min = <9>;
 				qcom,bus-max = <11>;
+				qcom,acd-level = <0x802d5ffd 0x00005411>;
 			};
 
 			qcom,gpu-pwrlevel@2 {
@@ -172,6 +179,7 @@
 				qcom,bus-freq = <9>;
 				qcom,bus-min = <8>;
 				qcom,bus-max = <11>;
+				qcom,acd-level = <0xa02d5ffd 0x00006011>;
 			};
 
 			qcom,gpu-pwrlevel@3 {
@@ -180,6 +188,7 @@
 				qcom,bus-freq = <6>;
 				qcom,bus-min = <5>;
 				qcom,bus-max = <9>;
+				qcom,acd-level = <0xa02d5ffd 0x00006111>;
 			};
 
 			qcom,gpu-pwrlevel@4 {
@@ -188,6 +197,7 @@
 				qcom,bus-freq = <4>;
 				qcom,bus-min = <3>;
 				qcom,bus-max = <5>;
+				qcom,acd-level = <0xa02d5ffd 0x00006911>;
 			};
 
 			qcom,gpu-pwrlevel@5 {
@@ -196,6 +206,7 @@
 				qcom,bus-freq = <3>;
 				qcom,bus-min = <2>;
 				qcom,bus-max = <4>;
+				qcom,acd-level = <0xa02d5ffd 0x00007611>;
 			};
 
 			qcom,gpu-pwrlevel@6 {
@@ -238,19 +249,4 @@
 	reg-names = "kgsl_gmu_reg",
 	"kgsl_gmu_pdc_cfg",
 	"kgsl_gmu_pdc_seq";
-
-	qcom,gpu-acd-table {
-		/* Corresponds to levels in the GPU perf table */
-		qcom,acd-enable-by-level = <0x7e>;
-		qcom,acd-stride = <0x2>;
-		qcom,acd-num-levels = <0x6>;
-
-		/* ACDCR, ACDTD */
-		qcom,acd-data = <0xa02d5ffd 0x00007611 /* LowSVS */
-		0xa02d5ffd 0x00006911 /* SVS */
-		0xa02d5ffd 0x00006111 /* SVS_L1 */
-		0xa02d5ffd 0x00006011 /* SVS_L2 */
-		0x802d5ffd 0x00005411 /* NOM */
-		0x802d5ffd 0x00005411>; /* NOM_L1 */
-	};
 };
