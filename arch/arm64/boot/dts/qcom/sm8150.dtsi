@@ -3738,6 +3738,7 @@
 		iommus = <&apps_smmu 0x521 0x0>;
 		/* ipa-uc ram */
 		qcom,additional-mapping = <0x1E60000 0x1E60000 0x80000>;
+		qcom,iommu-dma = "atomic";
 	};
 
 	ipa_smmu_uc: ipa_smmu_uc {
