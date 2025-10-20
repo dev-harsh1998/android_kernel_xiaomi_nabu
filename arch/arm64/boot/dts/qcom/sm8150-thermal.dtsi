@@ -12,7 +12,7 @@
 &clock_cpucc {
 	#address-cells = <1>;
 	#size-cells = <1>;
-	lmh_dcvs0: qcom,limits-dcvs@18358800 {
+	lmh_dcvs0: qcom,limits-dcvs@0 {
 		compatible = "qcom,msm-hw-limits";
 		interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
 		qcom,affinity = <0>;
@@ -21,7 +21,7 @@
 		#thermal-sensor-cells = <0>;
 	};
 
-	lmh_dcvs1: qcom,limits-dcvs@18350800 {
+	lmh_dcvs1: qcom,limits-dcvs@1 {
 		compatible = "qcom,msm-hw-limits";
 		interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
 		qcom,affinity = <1>;
