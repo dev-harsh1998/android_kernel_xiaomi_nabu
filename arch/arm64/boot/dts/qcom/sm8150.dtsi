@@ -3730,6 +3730,7 @@
 		/* modem tables in IMEM */
 		qcom,additional-mapping = <0x146BD000 0x146BD000 0x2000>;
 		dma-coherent;
+		qcom,iommu-dma = "fastmap";
 	};
 
 	ipa_smmu_wlan: ipa_smmu_wlan {
