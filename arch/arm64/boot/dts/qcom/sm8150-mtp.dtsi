@@ -41,7 +41,7 @@
 
 	mtp_batterydata: qcom,battery-data {
 		qcom,batt-id-range-pct = <15>;
-		#include "fg-gen4-batterydata-alium-3600mah.dtsi"
+		#include "battery/fg-gen4-batterydata-alium-3600mah.dtsi"
 	};
 
 	extcon_usb1: extcon_usb1 {
