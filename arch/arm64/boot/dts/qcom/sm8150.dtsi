@@ -13,7 +13,7 @@
 #include <dt-bindings/clock/qcom,cpucc-sm8150.h>
 #include <dt-bindings/clock/qcom,npucc-sm8150.h>
 #include <dt-bindings/clock/qcom,rpmh.h>
-//#include <dt-bindings/sound/qcom,gpr.h>
+#include <dt-bindings/sound/qcom,gpr.h>
 #include <dt-bindings/clock/qcom,aop-qmp.h>
 #include <dt-bindings/regulator/qcom,rpmh-regulator-levels.h>
 #include <dt-bindings/interrupt-controller/arm-gic.h>
@@ -2624,7 +2624,7 @@
 				qcom,intents = <0x200 20>;
 			};
 
-			/*qcom,gpr {
+			qcom,gpr {
 				compatible = "qcom,gpr";
 				qcom,glink-channels = "to_apps";
 				qcom,intents = <0x200 20>;
@@ -2642,7 +2642,7 @@
 					compatible = "qcom,q6prm";
 					reg = <GPR_SVC_ASM>;
 				};
-			};*/
+			};
 
 			qcom,msm_fastrpc_rpmsg {
 				compatible = "qcom,msm-fastrpc-rpmsg";
