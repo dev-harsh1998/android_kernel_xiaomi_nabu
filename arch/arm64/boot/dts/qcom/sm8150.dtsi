@@ -1004,8 +1004,11 @@
 
 	qcom,devfreq-l3 {
 		compatible = "qcom,devfreq-fw";
-		reg = <0x18321000 0x4>, <0x18321100 0xa0>, <0x18321320 0x4>;
-		reg-names = "en-base", "ftbl-base", "perf-base";
+		reg = <0x18321000 0x4>, <0x18321110 0x500>, <0x18321920 0x4>,
+		<0x18321700 0x4>;
+		reg-names = "en-base", "ftbl-base", "perf-base", "pstate-base";
+
+		qcom,ftbl-row-size = <32>;
 
 		cpu0_cpu_l3_lat: qcom,cpu0-cpu-l3-lat {
 			compatible = "qcom,devfreq-fw-voter";
